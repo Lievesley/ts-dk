@@ -25,6 +25,8 @@ jobs:
                   cache: pnpm
             - name: Install dependencies
               run: pnpm install --frozen-lockfile
+            - name: Verify docs matrix dependency
+              run: pnpm list @pnpm/find-workspace-packages --depth -1
             - id: pkg
               name: Generate docs matrix
               run: node .github/scripts/generateDocsMatrix.mjs >> "$GITHUB_OUTPUT"
