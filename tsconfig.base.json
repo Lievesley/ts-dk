@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "#/*": ["src/*"],
+            "#scripts/*": ["scripts/*"]
+        },
+
+        "target": "ES2022",
+        "module": "ES2022",
+        "moduleResolution": "bundler",
+
+        "strict": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitReturns": true,
+        "strictFunctionTypes": true,
+
+        "forceConsistentCasingInFileNames": true,
+        "skipLibCheck": true,
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "lib": ["ES2022"]
+    }
+}

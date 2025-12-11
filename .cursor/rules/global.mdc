@@ -1,0 +1,42 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+## Package Management
+- Use `pnpm` for all package management
+
+## Testing
+- Use `vitest` for testing
+- Run a single test: `pnpm run test -t "<test_name>" --reporter=verbose -- "<test_filename>"`
+
+## Code Standards
+- Target latest TypeScript 5.9.x with ES2022 syntax
+- Use only ESM imports/exports
+- Indent with 4 spaces
+- Never use `any` (violates ESLint rules)
+- Fix formatting with `pnpm exec eslint --fix "<filename>"`
+- Follow ESLint rules in `eslint.config.mjs`
+- Do not duplicate JSDoc comments in implementation files; document only in interfaces
+
+## Documentation
+- End all JSDoc descriptions with periods (full sentence style)
+- Include `@param` for all parameters with clear descriptions
+- Include `@returns` for all methods that return values
+- Use specific error types in `@throws` tags (e.g., `@throws {InsufficientDataError}`)
+- Document default parameter values in the `@param` description
+- Avoid implementation details in interface documentation
+
+## Debugging
+- Place debug files in `temp/`
+- Run debug files with `pnpm exec tsx "./temp/<file>.ts"`
+
+## Edit Tool Failure Prevention
+- Break down complex edits into smaller, manageable pieces
+- Use search_replace for specific line changes instead of large block edits
+- Provide very clear, unambiguous context for complex changes
+- Make edits incrementally rather than all at once
+- Avoid editing more than 10-15 lines in a single operation
+- Use targeted edits for structural changes (like removing while loops)
+- Verify each edit before proceeding to the next
+- If an edit fails, revert to the original file and try a smaller change

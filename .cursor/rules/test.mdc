@@ -1,0 +1,10 @@
+---
+globs: test/**/*.test.ts
+alwaysApply: false
+---
+- Structure non-trivial tests with **Given / When / Then** comments (skip these comments for single-statement or otherwise trivial tests—e.g., a single inline `expect` where setup and action are obvious).
+  - **Given:** set up state, optionally verify setup assumptions (not outcomes).
+  - **When:** perform the action (no `expect`).
+  - **Then:** assert all observable outcomes; multiple `expect`s allowed.
+  - If **When** adds too much boilerplate, merge it into **Then** (use `// Then` for the comment when the action is described inline).
+  - When a test genuinely collapses into `// Then` only (single expectation with inline setup/action), no extra comments are required.

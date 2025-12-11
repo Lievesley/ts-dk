@@ -1,0 +1,64 @@
+{
+    "name": "ts-dk",
+    "author": "TE·AM",
+    "version": "0.0.1",
+    "description": "TS-DK: The TypeScript DevKit for building better TypeScript apps fast.",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "compile": "pnpm -r --if-present --stream run compile",
+        "build": "pnpm -r --if-present --stream run build",
+        "build:docs": "pnpm -r --if-present --stream run build:docs",
+        "publish": "pnpm -r --if-present --stream run publish",
+        "publish:dry": "pnpm -r --if-present --stream run publish:dry",
+        "test": "pnpm -r --if-present --stream run test",
+        "test:bench": "pnpm -r --if-present --stream run test:bench",
+        "test:all": "pnpm -r --if-present --stream run test:all",
+        "test:coverage": "pnpm -r --if-present --stream run test:coverage",
+        "prepare": "(command -v git >/dev/null 2>&1 && test -d .git) && husky || true",
+        "lint": "eslint .",
+        "lint:fix": "eslint . --fix"
+    },
+    "keywords": [],
+    "license": "ISC",
+    "packageManager": "pnpm@10.24.0",
+    "publishConfig": {
+        "access": "public"
+    },
+    "devDependencies": {
+        "@commitlint/cli": "^20.1.0",
+        "@commitlint/config-angular": "^20.0.0",
+        "@types/node": "^24.10.1",
+        "@typescript-eslint/eslint-plugin": "^8.48.0",
+        "@typescript-eslint/parser": "^8.48.0",
+        "@vitest/coverage-v8": "^4.0.14",
+        "esbuild": "^0.27.0",
+        "eslint": "^9.39.1",
+        "eslint-config-prettier": "^10.1.8",
+        "eslint-import-resolver-typescript": "^4.4.4",
+        "eslint-plugin-import": "^2.32.0",
+        "eslint-plugin-jsonc": "^2.21.0",
+        "eslint-plugin-license-header": "^0.8.0",
+        "eslint-plugin-prettier": "^5.5.4",
+        "eslint-plugin-vitest": "^0.5.4",
+        "husky": "^9.1.7",
+        "jsonc-eslint-parser": "^2.4.1",
+        "lint-staged": "^16.2.7",
+        "prettier": "^3.7.1",
+        "tsx": "^4.21.0",
+        "typedoc": "^0.28.15",
+        "typedoc-plugin-markdown": "^4.9.0",
+        "typescript": "^5.9.3",
+        "vite-tsconfig-paths": "^5.1.4",
+        "vitest": "^4.0.14"
+    },
+    "lint-staged": {
+        "**/*.{cjs,mjs,js,jsx,json,jsonc,ts,tsx}": "eslint --fix",
+        "**/*.{css,scss}": "prettier --write"
+    },
+    "pnpm": {
+        "onlyBuiltDependencies": [
+            "esbuild"
+        ]
+    }
+}

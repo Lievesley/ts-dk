@@ -1,0 +1,10 @@
+.*.swp
+*.orig
+*.rej
+*.tsbuildinfo
+node_modules/
+coverage/
+dist/
+.build/
+temp/
+.pnpm-store/

@@ -1,0 +1,5 @@
+{
+    "snapshot": "snapshot-20251130-17b37227-4566-4d25-aa12-eb90d778c2ee",
+    "install": ". ~/.nvm/nvm.sh && nvm install && nvm use && corepack enable && corepack install && pnpm install",
+    "terminals": []
+}

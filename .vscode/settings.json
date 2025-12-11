@@ -1,0 +1,67 @@
+{
+    "github.copilot.chat.agent.thinkingTool": false,
+    "github.copilot.chat.codesearch.enabled": true,
+    "github.copilot.chat.summarizeAgentConversationHistory.enabled": true,
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "typescript.enablePromptUseWorkspaceTsdk": true,
+    "typescript.tsserver.log": "verbose",
+    "[javascript]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
+    "[javascriptreact]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "always"
+    },
+    "editor.formatOnSaveMode": "modifications",
+    "eslint.enable": true,
+    "eslint.experimental.useFlatConfig": true,
+    "eslint.format.enable": true,
+    "eslint.run": "onSave",
+    "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact", "json", "jsonc"],
+    "eslint.codeActionsOnSave.mode": "problems",
+    "editor.detectIndentation": false,
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "javascript.validate.enable": true,
+    "typescript.validate.enable": true,
+    "json.format.enable": false,
+    "json.validate.enable": false,
+    "prettier.useEditorConfig": true,
+    "files.exclude": {
+        "**/coverage": true,
+        "**/dist": true,
+        "**/node_modules": true,
+        "**/.build": true,
+        "**/.pnpm-store": true,
+        "pnpm-lock.yaml": true,
+        "*.tsbuildinfo": true
+    },
+    "search.exclude": {
+        "**/coverage": true,
+        "**/dist": true,
+        "**/node_modules": true,
+        "**/.build": true,
+        "**/.pnpm-store": true,
+        "pnpm-lock.yaml": true,
+        "*.tsbuildinfo": true
+    },
+    "files.watcherExclude": {
+        "**/coverage/**": true,
+        "**/dist/**": true,
+        "**/node_modules/**": true,
+        "**/.build/**": true,
+        "**/.pnpm-store/**": true,
+        "pnpm-lock.yaml": true,
+        "*.tsbuildinfo": true
+    }
+}
