@@ -30,7 +30,12 @@ jobs:
               run: pnpm list @pnpm/find-workspace-packages --depth -1
             - id: pkg
               name: Generate docs matrix
-              run: node .github/scripts/generateDocsMatrix.mjs >> "$GITHUB_OUTPUT"
+              run: |
+                  set -euo pipefail
+                  MATRIX_OUTPUT=$(node .github/scripts/generateDocsMatrix.mjs)
+                  echo "Matrix output:"
+                  echo "$MATRIX_OUTPUT"
+                  echo "$MATRIX_OUTPUT" >> "$GITHUB_OUTPUT"
 
     docs:
         needs: discover
