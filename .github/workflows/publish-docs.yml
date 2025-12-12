@@ -67,7 +67,7 @@ jobs:
               run: pnpm -F ${{ matrix.pkg.name }} run build:docs
             - name: Stage versioned docs
               run: |
-                  VERSION=$(node -p "require('./${{ matrix.pkg.dir }}/package.json').version")
+                  VERSION=$(node -p "require('${{ matrix.pkg.dir }}/package.json').version")
                   echo "VERSION=$VERSION" >> "$GITHUB_ENV"
                   STAGE=./gh-pages
                   mkdir -p "$STAGE/${{ matrix.pkg.slug }}/v$VERSION" "$STAGE/${{ matrix.pkg.slug }}/latest"
