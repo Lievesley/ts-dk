@@ -35,7 +35,16 @@ jobs:
                   MATRIX_OUTPUT=$(node .github/scripts/generateDocsMatrix.mjs)
                   echo "Matrix output:"
                   echo "$MATRIX_OUTPUT"
-                  echo "$MATRIX_OUTPUT" >> "$GITHUB_OUTPUT"
+                  echo "matrix=$MATRIX_OUTPUT" >> "$GITHUB_OUTPUT"
+
+    verify-matrix:
+        needs: discover
+        runs-on: ubuntu-latest
+        steps:
+            - name: Log discover matrix output
+              run: |
+                  echo "Matrix from discover:"
+                  echo "${{ needs.discover.outputs.matrix }}"
 
     docs:
         needs: discover

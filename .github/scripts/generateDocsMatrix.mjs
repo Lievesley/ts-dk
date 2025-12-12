@@ -30,4 +30,4 @@ const uniq = packages
         { seen: new Set(), items: [] },
     ).items;
 
-process.stdout.write(`matrix=${JSON.stringify({ pkg: uniq })}`);
+process.stdout.write(JSON.stringify({ pkg: uniq }));
