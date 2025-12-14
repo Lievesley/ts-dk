@@ -18,6 +18,10 @@ function packageKey(packageName) {
     return key;
 }
 
+function packageDisplayName(packageName) {
+    return packageKey(packageName);
+}
+
 function runTypedoc(args) {
     execFileSync('pnpm', ['exec', 'typedoc', ...args], { stdio: 'inherit' });
 }
@@ -60,6 +64,7 @@ async function main() {
 
     for (const pkg of packageEntries) {
         const key = packageKey(pkg.name);
+        const displayName = packageDisplayName(pkg.name);
         const pkgDir = resolve(apiRootDir, key);
         // Version comes from package.json (source of truth).
         const versionDirName = `v${pkg.version}`;
@@ -85,6 +90,8 @@ async function main() {
         runTypedoc([
             '--options',
             baseConfigPath,
+            '--name',
+            displayName,
             '--entryPoints',
             entryPoint,
             '--tsconfig',
@@ -101,7 +108,7 @@ async function main() {
             .sort((a, b) => b.localeCompare(a, undefined, { numeric: true }));
 
         const pkgIndexLines = [
-            `# ${pkg.name}`,
+            `# ${displayName}`,
             '',
             `- [latest](./${versionDirName}/index.md)`,
             ...versions.map((name) => `- [${name}](./${name}/index.md)`),
@@ -109,7 +116,7 @@ async function main() {
         ];
         writeFileSync(resolve(pkgDir, 'index.md'), `${pkgIndexLines.join('\n')}\n`);
 
-        apiIndexLines.push(`- [\`${pkg.name}\`](./${key}/${versionDirName}/index.md)`);
+        apiIndexLines.push(`- [\`${displayName}\`](./${key}/${versionDirName}/index.md)`);
     }
 
     writeFileSync(resolve(apiRootDir, 'index.md'), `${apiIndexLines.join('\n')}\n`);
