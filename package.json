@@ -8,7 +8,9 @@
     "scripts": {
         "compile": "pnpm -r --if-present --stream run compile",
         "build": "pnpm -r --if-present --stream run build",
-        "build:docs": "pnpm -r --if-present --stream run build:docs",
+        "docs:prepare": "node ./scripts/prepareApiDocs.mjs",
+        "docs:start": "pnpm run docs:prepare && pnpm --filter ./packages/docs-site start",
+        "docs:build": "pnpm run docs:prepare && pnpm --filter ./packages/docs-site build",
         "publish": "pnpm -r --if-present --stream run publish",
         "publish:dry": "pnpm -r --if-present --stream run publish:dry",
         "test": "pnpm -r --if-present --stream run test",

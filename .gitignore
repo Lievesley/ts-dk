@@ -8,3 +8,14 @@ dist/
 .build/
 temp/
 .pnpm-store/
+
+# VitePress build outputs / caches.
+docs/.vitepress/dist/
+docs/.vitepress/cache/
+
+# Docusaurus build outputs / caches.
+packages/docs-site/build/
+packages/docs-site/.docusaurus/
+
+# TypeDoc output used by the docs site (generated in CI and via `pnpm run docs:prepare`).
+packages/docs-site/docs/api/

@@ -1,0 +1,13 @@
+// Copyright (c) 2025 TE·AM. All rights reserved.
+
+{
+    "extends": ["./typedoc.base.jsonc"],
+    "includeVersion": true,
+    "entryPointStrategy": "packages",
+    "entryPoints": ["packages/*"],
+    "out": "docs/api",
+    "packageOptions": {
+        "entryPoints": ["src/index.ts"],
+        "tsconfig": "tsconfig.build.json",
+    },
+}

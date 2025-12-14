@@ -1,0 +1,95 @@
+name: Cleanup gh-pages
+
+on:
+    workflow_dispatch:
+        inputs:
+            paths:
+                description: "Paths to delete from gh-pages (comma or newline separated). Example: latest, v0.1.0"
+                required: true
+                default: "latest"
+            dry_run:
+                description: "If true, print what would be deleted but do not commit/push."
+                required: true
+                default: "true"
+
+permissions:
+    contents: write
+
+jobs:
+    cleanup:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout gh-pages
+              uses: actions/checkout@v4
+              with:
+                  ref: gh-pages
+                  fetch-depth: 0
+
+            - name: Delete requested paths
+              shell: bash
+              env:
+                  PATHS_INPUT: ${{ inputs.paths }}
+                  DRY_RUN: ${{ inputs.dry_run }}
+              run: |
+                  set -euo pipefail
+
+                  echo "Requested paths:"
+                  echo "${PATHS_INPUT}"
+                  echo ""
+
+                  # Normalize separators: commas -> newlines, strip empty lines.
+                  PATHS="$(printf '%s\n' "${PATHS_INPUT}" | tr ',' '\n' | sed -e 's/^[[:space:]]\+//; s/[[:space:]]\+$//' | sed '/^$/d')"
+
+                  if [ -z "${PATHS}" ]; then
+                      echo "No paths provided after normalization."
+                      exit 1
+                  fi
+
+                  delete_one() {
+                      local p="$1"
+
+                      # Safety rails: refuse anything dangerous.
+                      if [ "${p}" = "." ] || [ "${p}" = "./" ] || [ "${p}" = "/" ] || [ "${p}" = "" ]; then
+                          echo "Refusing to delete unsafe path: '${p}'"
+                          exit 1
+                      fi
+                      case "${p}" in
+                          *".."*|/*)
+                              echo "Refusing to delete path containing '..' or starting with '/': '${p}'"
+                              exit 1
+                              ;;
+                      esac
+
+                      if [ ! -e "${p}" ]; then
+                          echo "Path does not exist on gh-pages (skipping): ${p}"
+                          return 0
+                      fi
+
+                      echo "Deleting: ${p}"
+                      rm -rf -- "${p}"
+                  }
+
+                  while IFS= read -r p; do
+                      delete_one "${p}"
+                  done <<< "${PATHS}"
+
+                  echo ""
+                  echo "Git status after deletion:"
+                  git status --porcelain=v1 || true
+
+                  if [ "${DRY_RUN}" = "true" ]; then
+                      echo ""
+                      echo "Dry-run enabled; not committing."
+                      exit 0
+                  fi
+
+                  if git diff --quiet; then
+                      echo "No changes to commit."
+                      exit 0
+                  fi
+
+                  git config user.name "github-actions[bot]"
+                  git config user.email "github-actions[bot]@users.noreply.github.com"
+                  git add -A
+                  git commit -m "chore(gh-pages): cleanup requested paths"
+                  git push origin gh-pages

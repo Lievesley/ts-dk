@@ -1,0 +1,11 @@
+{
+    "mcpServers": {
+        "documcp": {
+            "command": "pnpm",
+            "args": ["dlx", "documcp"],
+            "env": {
+                "DOCUMCP_STORAGE_DIR": ".documcp/memory"
+            }
+        }
+    }
+}

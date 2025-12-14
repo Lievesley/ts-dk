@@ -27,7 +27,6 @@
     "scripts": {
         "compile": "node ../../scripts/esbuild.config.mjs ./tsconfig.build.json && tsc -b ./tsconfig.build.json --emitDeclarationOnly --force",
         "build": "node ../../scripts/runBuild.mjs",
-        "build:docs": "pnpm exec typedoc --options ./typedoc.json",
         "publish": "pnpm run build && cd dist && pnpm publish",
         "publish:dry": "pnpm run build && cd dist && pnpm publish --dry-run",
         "test": "vitest run",

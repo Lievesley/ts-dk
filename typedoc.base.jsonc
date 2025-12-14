@@ -1,0 +1,15 @@
+// Copyright (c) 2025 TE·AM. All rights reserved.
+
+{
+    // Shared TypeDoc settings used by documentation generators.
+    //
+    // Repo-specific entry points / output paths should live in `typedoc.jsonc`
+    // or be provided via CLI flags (see `scripts/prepareApiDocs.mjs`).
+    "plugin": ["typedoc-plugin-markdown"],
+
+    // Generate `index.md` instead of `README.md` to better match static site generators.
+    "entryFileName": "index",
+
+    "readme": "none",
+    "hideGenerator": true,
+}
