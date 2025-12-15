@@ -12,12 +12,14 @@ alwaysApply: true
 
 ## Code Standards
 - Target latest TypeScript 5.9.x with ES2022 syntax
-- Use only ESM imports/exports
+- Only use ESM imports/exports
 - Indent with 4 spaces
+- Avoid nested functions
 - Never use `any` (violates ESLint rules)
 - Fix formatting with `pnpm exec eslint --fix "<filename>"`
 - Follow ESLint rules in `eslint.config.mjs`
-- Do not duplicate JSDoc comments in implementation files; document only in interfaces
+- Document public API's with TSDoc comments.
+- Do not duplicate TSDoc comments in implementation files; document only interfaces
 
 ## Documentation
 - End all JSDoc descriptions with periods (full sentence style)

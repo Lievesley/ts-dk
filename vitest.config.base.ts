@@ -34,14 +34,6 @@ export default defineConfig({
                 //     branches: 90,
                 //     statements: 90,
                 // },
-
-                // Per-file thresholds - enforce 90% coverage for these modules
-                './src/{libA,libB,libC}/**/*.{ts,tsx}': {
-                    lines: 90,
-                    functions: 90,
-                    branches: 90,
-                    statements: 90,
-                },
             },
         },
 

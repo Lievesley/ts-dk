@@ -13,29 +13,41 @@ pnpm add {{name}}
 ```ts
 import {
     LogLevel,
-    logMessage,
-    startConsoleLogWriterWithMinLevel,
-    startFileLogWriterWithLevels,
+    consoleLogWriter,
+    fileLogWriter,
+    log,
+    startLogger,
+    resetLoggers,
 } from '{{name}}';
 
-startConsoleLogWriterWithMinLevel(LogLevel.INFO);
-startFileLogWriterWithLevels('/tmp/app.log', [LogLevel.WARN, LogLevel.ERROR], ['api', 'worker']);
+// Start a console logger with a minimum level
+startLogger({
+    logWriter: consoleLogWriter,
+    minLevel: LogLevel.INFO,
+});
 
-logMessage({ level: LogLevel.INFO }, 'Server started on %s', port);
-logMessage({ level: LogLevel.WARN, component: 'api' }, 'Slow response for %s', route);
+// Start a file logger for WARN/ERROR and selected components
+startLogger({
+    logWriter: fileLogWriter('/tmp/app.log'),
+    levels: [LogLevel.WARN, LogLevel.ERROR],
+    components: ['api', 'worker'],
+});
+
+log({ level: LogLevel.INFO }, 'Server started on %s', port);
+log({ level: LogLevel.WARN, component: 'api' }, 'Slow response for %s', route);
 ```
 
 ## API
 
 - `LogLevel`: enum for TRACE/DEBUG/INFO/WARN/ERROR.
-- `logMessage(options, ...args)`: fan-out to active sinks; `options` supports `level` and optional `component`.
-- `startConsoleLogWriterWithMinLevel(minLevel, components?)`: console writer with minimum level and optional component allowlist.
-- `startConsoleLogWriterWithLevels(levels, components?)`: console writer for explicit levels.
-- `startFileLogWriterWithMinLevel(filePath, minLevel, components?)`: file writer with minimum level.
-- `startFileLogWriterWithLevels(filePath, levels, components?)`: file writer for explicit levels.
-- `createFilteredLogWriter({ levelFilter, componentFilter, logWriter })`: build a custom writer with your own handler.
-- `addLogWriter(logWriter)`: register a custom writer built via `createFilteredLogWriter`.
-- `resetLogWriters()`: clears all active writers.
+- `log(options, ...args)`: fan-out to all active loggers; `options` supports `level` and optional `component`.
+- `startLogger(config)`: register a logger with writer, levels/minLevel, components, filters, and mode (`all`/`any`). Returns a `FilteredLogger`.
+- `resetLoggers()`: clears all active loggers from the default registry.
+- `consoleLogWriter(options, ...args)`: write formatted logs to stderr.
+- `fileLogWriter(filePath)`: create a writer that appends formatted logs to a file (falls back to console on error).
+- `FilteredLogger`: supports `addFilter(filter)`, `removeFilter(handle)`, `clearFilters()`, and `stop()`.
+- `createLoggerRegistry()`, `LoggerRegistry`: build and manage custom registries (advanced).
+- Filters: `selectedLevelsLogFilter(levels)`, `minLevelLogFilter(minLevel)`, `componentsLogFilter(components)`, `envLogFilter(envVar)`.
 
 ## Filtering
 

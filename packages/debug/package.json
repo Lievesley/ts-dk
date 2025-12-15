@@ -44,8 +44,5 @@
     "packageManager": "pnpm@10.24.0",
     "publishConfig": {
         "access": "public"
-    },
-    "dependencies": {
-        "commander": "^14.0.2"
     }
 }
