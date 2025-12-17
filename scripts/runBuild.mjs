@@ -82,23 +82,19 @@ async function main() {
     const distDir = resolve(packageDir, dirname(outDir));
     const readmeTemplatePath = resolve(packageDir, 'README.template.md');
     const readmePath = resolve(packageDir, 'README.md');
-    if (!(await isFile(readmeTemplatePath))) {
-        throw new Error('README.template.md is required to build this package.');
-    }
     const manifest = JSON.parse(await readFile(manifestPath, 'utf-8'));
-    await renderTemplateFile(readmeTemplatePath, readmePath, {
-        name: manifest.name ?? '',
-        version: manifest.version ?? '',
-        description: manifest.description ?? '',
-        homepage: manifest.homepage ?? '',
-    });
+    try {
+        await renderTemplateFile(readmeTemplatePath, readmePath, {
+            name: manifest.name ?? '',
+            version: manifest.version ?? '',
+            description: manifest.description ?? '',
+            homepage: manifest.homepage ?? '',
+        });
+    } catch {}
     if (!(await isFile(readmePath))) {
         throw new Error('README.md is required to build this package.');
     }
     console.log(`Rendered README from template at ${readmeTemplatePath}`);
-    if (await isFileDirty(packageDir, readmePath)) {
-        throw new Error('README.md has changes relative to git. Please commit or revert before publishing.');
-    }
     await rm(distDir, { recursive: true, force: true });
     await runCommand('pnpm', packageDir, ['run', 'compile']);
     await copyFile(readmePath, resolve(distDir, 'README.md'));

@@ -1,6 +1,6 @@
 // Copyright (c) 2025 TE·AM. All rights reserved.
 
-import { componentsLogFilter, minLevelLogFilter, selectedLevelsLogFilter } from './filters';
+import { componentPrefixLogFilter, minLevelLogFilter, selectedLevelLogFilter } from './filters';
 import { Logger } from './Logger';
 import type { FilteredLogger, LoggerConfig, LogOptions } from './types';
 
@@ -24,17 +24,17 @@ export class LoggerRegistry {
      * @returns A filtered logger instance registered with this registry.
      */
     public startLogger(config: LoggerConfig): FilteredLogger {
-        const { logWriter, mode = 'all', levels = [], minLevel, components = [], filters = [] } = config;
-        const logger = new Logger(mode, logWriter, (c) => {
-            this.loggers.delete(c);
+        const { logWriter, mode = 'all', levels = [], minLevel, componentPrefixes = [], filters = [] } = config;
+        const logger = new Logger(mode, logWriter, (logger: Logger) => {
+            this.loggers.delete(logger);
         });
 
         if (levels.length > 0) {
-            logger.addFilter(selectedLevelsLogFilter(levels));
+            logger.addFilter(selectedLevelLogFilter(levels));
         } else if (minLevel !== undefined) {
             logger.addFilter(minLevelLogFilter(minLevel));
         }
-        logger.addFilter(componentsLogFilter(components));
+        logger.addFilter(componentPrefixLogFilter(componentPrefixes));
         for (const filter of filters) {
             logger.addFilter(filter);
         }

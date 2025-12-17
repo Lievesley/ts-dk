@@ -11,7 +11,7 @@ export class Logger implements FilteredLogger {
     public constructor(
         private readonly mode: FilterMode,
         private readonly logWriter: LogWriter,
-        private readonly unregister: (controller: Logger) => void,
+        private readonly unregister: (logger: Logger) => void,
     ) {}
 
     /**

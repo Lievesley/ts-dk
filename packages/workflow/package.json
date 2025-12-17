@@ -1,0 +1,54 @@
+{
+    "name": "@private-test-org/workflow",
+    "author": "TE·AM",
+    "version": "0.0.0",
+    "description": "Workflow automation tools.",
+    "private": true,
+    "type": "module",
+    "module": "./dist/esm/index.js",
+    "types": "./dist/esm/index.d.ts",
+    "exports": {
+        ".": {
+            "import": "./dist/esm/index.js",
+            "types": "./dist/esm/index.d.ts"
+        }
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/lievesley/ts-dk.git",
+        "directory": "packages/workflow"
+    },
+    "bugs": {
+        "url": "https://github.com/lievesley/ts-dk/issues"
+    },
+    "homepage": "https://github.com/lievesley/ts-dk/tree/main/packages/workflow",
+    "buildEntry": "./src/index.ts",
+    "sideEffects": false,
+    "scripts": {
+        "compile": "node ../../scripts/esbuild.config.mjs ./tsconfig.build.json && tsc -b ./tsconfig.build.json --emitDeclarationOnly --force",
+        "build": "node ../../scripts/runBuild.mjs",
+        "publish": "pnpm run build && cd dist && pnpm publish",
+        "publish:dry": "pnpm run build && cd dist && pnpm publish --dry-run",
+        "test": "vitest run",
+        "test:bench": "vitest bench --run --passWithNoTests",
+        "test:all": "pnpm run test && pnpm run test:bench",
+        "test:coverage": "vitest run --coverage"
+    },
+    "keywords": [
+        "logging",
+        "debug",
+        "filter",
+        "logger"
+    ],
+    "license": "ISC",
+    "packageManager": "pnpm@10.24.0",
+    "publishConfig": {
+        "access": "public"
+    },
+    "dependencies": {
+        "@openai/codex-sdk": "^0.72.0",
+        "@private-test-org/debug": "workspace:*",
+        "human-id": "^4.1.3",
+        "zod": "^4.1.13"
+    }
+}

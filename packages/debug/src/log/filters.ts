@@ -8,7 +8,7 @@ import { LogLevel, type LogFilter, type LogOptions } from './types';
  * @param levels - Exact log levels to permit.
  * @returns Filter that passes when the log level is in `levels`.
  */
-export function selectedLevelsLogFilter(levels: LogLevel[]): LogFilter {
+export function selectedLevelLogFilter(levels: LogLevel[]): LogFilter {
     const allowedLogLevels = new Set(levels);
     return (options: LogOptions): boolean => allowedLogLevels.has(options.level);
 }
@@ -24,14 +24,37 @@ export function minLevelLogFilter(minLevel: LogLevel): LogFilter {
 }
 
 /**
- * Create a filter that allows messages from specific components.
+ * Create a filter that allows messages from components matching the given prefixes.
  *
- * @param components - Allowed component names; empty array allows all components.
+ * @param componentPrefixes - Component name prefixes to match; empty array allows all components.
+ * @returns Filter that passes when the component starts with any allowed prefix.
+ */
+export function componentPrefixLogFilter(componentPrefixes: string[]): LogFilter {
+    if (componentPrefixes.length === 0) {
+        return (_options: LogOptions): boolean => true;
+    }
+    return (options: LogOptions): boolean => {
+        if (options.component === undefined) {
+            return false;
+        }
+        for (const componentPrefix of componentPrefixes) {
+            if (options.component.startsWith(componentPrefix)) {
+                return true;
+            }
+        }
+        return false;
+    };
+}
+
+/**
+ * Create a filter that allows messages from components matching the given names.
+ *
+ * @param components - Component names to match; empty array allows all components.
  * @returns Filter that passes when the component is allowed.
  */
-export function componentsLogFilter(components: string[]): LogFilter {
+export function componentMatchingLogFilter(components: string[]): LogFilter {
     if (components.length === 0) {
-        return (): boolean => true;
+        return (_options: LogOptions): boolean => true;
     }
     const allowedComponents = new Set(components);
     return (options: LogOptions): boolean => options.component !== undefined && allowedComponents.has(options.component);
@@ -39,14 +62,26 @@ export function componentsLogFilter(components: string[]): LogFilter {
 
 /**
  * Build a filter that passes only when the given environment variable
- * is set to a truthy value (non-empty string).
+ * is set to a truthy value.
+ *
+ * The filter passes when the environment variable is set to any non-empty value
+ * that is not explicitly falsy. Falsy values (case-insensitive, after trimming)
+ * are: empty string, "0", "false", and "no". All other values (including "1",
+ * "true", "yes", or any other string) are considered truthy and will pass.
  *
  * @param envVar - Name of the environment variable to check.
- * @returns LogFilter that returns true when envVar is set.
+ * @returns LogFilter that returns true when envVar is set to a truthy value.
  */
 export function envLogFilter(envVar: string): LogFilter {
-    return (): boolean => {
+    return (_options: LogOptions): boolean => {
         const value = process.env[envVar];
-        return typeof value === 'string' && value.trim() !== '';
+        if (value === undefined) {
+            return false;
+        }
+        const normalized = value.trim().toLowerCase();
+        if (normalized === '' || normalized === '0' || normalized === 'false' || normalized === 'no') {
+            return false;
+        }
+        return true;
     };
 }

@@ -1,0 +1,48 @@
+{
+    "name": "@private-test-org/utils",
+    "author": "TE·AM",
+    "version": "0.0.0",
+    "description": "General-purpose utility functions for TypeScript/Node.js.",
+    "private": true,
+    "type": "module",
+    "module": "./dist/esm/index.js",
+    "types": "./dist/esm/index.d.ts",
+    "exports": {
+        ".": {
+            "import": "./dist/esm/index.js",
+            "types": "./dist/esm/index.d.ts"
+        }
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/lievesley/ts-dk.git",
+        "directory": "packages/utils"
+    },
+    "bugs": {
+        "url": "https://github.com/lievesley/ts-dk/issues"
+    },
+    "homepage": "https://github.com/lievesley/ts-dk/tree/main/packages/utils",
+    "buildEntry": "./src/index.ts",
+    "sideEffects": false,
+    "scripts": {
+        "compile": "node ../../scripts/esbuild.config.mjs ./tsconfig.build.json && tsc -b ./tsconfig.build.json --emitDeclarationOnly --force",
+        "build": "node ../../scripts/runBuild.mjs",
+        "publish": "pnpm run build && cd dist && pnpm publish",
+        "publish:dry": "pnpm run build && cd dist && pnpm publish --dry-run",
+        "test": "vitest run",
+        "test:bench": "vitest bench --run --passWithNoTests",
+        "test:all": "pnpm run test && pnpm run test:bench",
+        "test:coverage": "vitest run --coverage"
+    },
+    "keywords": [
+        "utils",
+        "utilities",
+        "helpers",
+        "typescript"
+    ],
+    "license": "ISC",
+    "packageManager": "pnpm@10.24.0",
+    "publishConfig": {
+        "access": "public"
+    }
+}

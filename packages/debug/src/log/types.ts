@@ -59,12 +59,21 @@ export interface FilterHandle {
  */
 export interface FilteredLogger {
     /**
+     * Write a log message if filters permit.
+     *
+     * @param options - Log metadata for this message.
+     * @param args - Arguments to render into the log output.
+     */
+    log(options: LogOptions, ...args: unknown[]): void;
+
+    /**
      * Add a filter to this logger.
      *
      * @param filter - Predicate that determines if a log should pass.
      * @returns Handle that can be used to remove the filter.
      */
     addFilter(filter: LogFilter): FilterHandle;
+
     /**
      * Remove a filter from this logger.
      *
@@ -72,10 +81,12 @@ export interface FilteredLogger {
      * @returns True when the filter was removed.
      */
     removeFilter(handle: FilterHandle): boolean;
+
     /**
      * Remove all filters from this logger.
      */
     clearFilters(): void;
+
     /**
      * Unregister this logger from its registry.
      */
@@ -90,24 +101,29 @@ export interface LoggerConfig {
      * Sink that will receive log messages.
      */
     logWriter: LogWriter;
+
     /**
      * How filters are combined. Defaults to `all`.
      */
     mode?: FilterMode;
-    /**
-     * Optional allowlist of components that may emit logs. Empty list means allow all.
-     */
-    components?: string[];
-    /**
-     * Additional custom filters to apply.
-     */
-    filters?: LogFilter[];
+
     /**
      * Explicit log levels to allow. Takes precedence over {@link minLevel}.
      */
     levels?: LogLevel[];
+
     /**
      * Minimum severity to allow when `levels` is not provided.
      */
     minLevel?: LogLevel;
+
+    /**
+     * Optional list of component prefixes that may emit logs. Empty list means allow all components.
+     */
+    componentPrefixes?: string[];
+
+    /**
+     * Additional custom filters to apply.
+     */
+    filters?: LogFilter[];
 }
