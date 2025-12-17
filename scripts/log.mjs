@@ -7,7 +7,7 @@ const dbg = await import('@private-test-org/debug').catch(() => null);
 const LOG_COMPONENT = 'ts-dk/scripts/generateCommitMessage';
 
 export const LogLevel = dbg?.LogLevel;
-export const log = dbg?.createLog?.(LOG_COMPONENT) ?? ((..._args) => {});
+export const log = dbg?.createComponentLog?.(LOG_COMPONENT) ?? ((..._args) => {});
 
 export function startLogger() {
     if (dbg?.startLogger && dbg?.consoleLogWriter && dbg?.LogLevel) {

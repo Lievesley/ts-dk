@@ -3,11 +3,12 @@
 import { appendFileSync } from 'node:fs';
 import { format } from 'node:util';
 
-import type { LogOptions, LogWriter } from './types';
+import { LogLevel, type LogOptions, type LogWriter } from './types';
 
 function formatLog(options: LogOptions, args: unknown[]): string {
     const componentPart = options.component ? ` [${options.component}]` : '';
-    return `${new Date().toISOString()} [${options.level}]${componentPart} ${format(...args)}`;
+    const levelName = LogLevel[options.level] ?? options.level;
+    return `${new Date().toISOString()} [${levelName}]${componentPart} ${format(...args)}`;
 }
 
 /**

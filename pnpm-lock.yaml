@@ -136,15 +136,16 @@ importers:
       '@openai/codex-sdk':
         specifier: ^0.72.0
         version: 0.72.0
-      '@private-test-org/debug':
-        specifier: workspace:*
-        version: link:../debug
       human-id:
         specifier: ^4.1.3
         version: 4.1.3
       zod:
         specifier: ^4.1.13
         version: 4.1.13
+    devDependencies:
+      '@private-test-org/debug':
+        specifier: workspace:*
+        version: link:../debug
 
 packages:
 

@@ -11,7 +11,7 @@ import { LogLevel } from './types';
  * @param component - Component name to include in log messages.
  * @returns A function that takes a log level and arguments to log at that level for the component.
  */
-export function createLog(component?: string): (level?: LogLevel, ...args: unknown[]) => void {
+export function createComponentLog(component?: string): (level?: LogLevel, ...args: unknown[]) => void {
     if (component === undefined) {
         return (level?: LogLevel, ...args: unknown[]) => {
             if (level !== undefined) {

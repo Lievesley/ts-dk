@@ -5,4 +5,4 @@ const dbg = await import('@private-test-org/debug').catch(() => null);
 const LOG_COMPONENT = 'ts-dk/workflow';
 
 export const LogLevel = dbg?.LogLevel;
-export const log = dbg?.createLog?.(LOG_COMPONENT) ?? ((..._args: unknown[]) => {});
+export const log = dbg?.createComponentLog?.(LOG_COMPONENT) ?? ((..._args: unknown[]) => {});
