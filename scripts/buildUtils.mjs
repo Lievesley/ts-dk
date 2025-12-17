@@ -77,9 +77,13 @@ export async function tryResolveFile(basePath, extensions) {
 /**
  * Gets dependencies from a package.json object.
  * @param {Object} manifest - package.json contents
+ * @param {string[]} dependencySections - Sections to get dependencies from
  * @returns {string[]} Array of dependency names
  */
-export function getDependencies(manifest, dependencySections = ['dependencies', 'peerDependencies', 'optionalDependencies']) {
+export function getDependencies(
+    manifest,
+    dependencySections = ['dependencies', 'peerDependencies', 'optionalDependencies', 'devDependencies'],
+) {
     if (!manifest || typeof manifest !== 'object') {
         throw new Error('Invalid package.json contents provided.');
     }

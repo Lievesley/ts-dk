@@ -142,7 +142,7 @@ async function main() {
     const manifestPath = resolveManifestPath();
     console.log(`Manifest path: ${manifestPath}`);
     const packageJson = JSON.parse(await readFile(manifestPath, 'utf-8'));
-    const dependencies = getDependencies(packageJson);
+    const dependencies = getDependencies(packageJson, ['dependencies', 'peerDependencies', 'optionalDependencies', 'devDependencies']);
 
     const pkgDir = dirname(manifestPath);
     const tsconfigArg = process.argv[2];

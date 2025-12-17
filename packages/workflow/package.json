@@ -47,8 +47,10 @@
     },
     "dependencies": {
         "@openai/codex-sdk": "^0.72.0",
-        "@private-test-org/debug": "workspace:*",
         "human-id": "^4.1.3",
         "zod": "^4.1.13"
+    },
+    "devDependencies": {
+        "@private-test-org/debug": "workspace:*"
     }
 }
