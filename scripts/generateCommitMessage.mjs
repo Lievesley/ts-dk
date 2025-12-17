@@ -70,12 +70,12 @@ async function main() {
         return;
     }
 
-    const rootDir = fileURLToPath(new URL('../', import.meta.url));
-    const messageFilePath = path.isAbsolute(messageFileArg) ? messageFileArg : path.resolve(rootDir, messageFileArg);
+    const repoRoot = fileURLToPath(new URL('../', import.meta.url));
+    const messageFilePath = path.isAbsolute(messageFileArg) ? messageFileArg : path.resolve(repoRoot, messageFileArg);
 
     await generateCommitMessage({
         messageFilePath,
-        rootDir,
+        repoRoot,
         model: 'gpt-5-codex-mini',
         modelReasoningEffort: 'high',
     });
